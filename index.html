@@ -16,16 +16,14 @@
     font-family: 'Comfortaa', cursive, Arial, sans-serif;
     background: linear-gradient(135deg, #f7e5d7, #f4cba1);
     color: #4a2c2a;
-
-    /* prevent shrinking */
     overflow: hidden;
   }
 
   /* Left column */
   #leftCol {
     width: 320px;
-    min-width: 320px;     /* prevent shrinking */
-    flex-shrink: 0;       /* do not allow shrinking */
+    min-width: 320px;
+    flex-shrink: 0;
     background: #fff8f0;
     border-right: 3px solid #d2691e;
     padding: 20px;
@@ -70,16 +68,20 @@
     background: #d2691e;
     color: white;
   }
+  /* Added ingredient-item class for click targeting */
+  .ingredient-item {
+    /* no extra styles needed beyond li */
+  }
 
   /* Right column */
   #rightCol {
     flex-grow: 1;
-    min-width: 0;         /* important to allow flex shrink internally */
+    min-width: 0;
     background: #fff0e6;
     padding: 30px 40px;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;     /* scroll if content too tall */
+    overflow-y: auto;
   }
 
   /* Ingredient box container */
@@ -100,8 +102,8 @@
     align-items: center;
   }
 
-  /* Ingredient tags */
-  .ingredientTag {
+  /* Ingredient chips */
+  .ingredient-chip {
     background: #d2691e;
     color: white;
     border-radius: 18px;
@@ -115,11 +117,11 @@
     transition: background-color 0.3s ease;
     font-size: 15px;
   }
-  .ingredientTag:hover {
+  .ingredient-chip:hover {
     background: #b05300;
   }
 
-  /* Remove X */
+  /* Remove X inside chip */
   .removeX {
     margin-left: 8px;
     font-weight: bold;
@@ -128,7 +130,7 @@
     opacity: 0;
     transition: opacity 0.25s ease;
   }
-  .ingredientTag:hover .removeX {
+  .ingredient-chip:hover .removeX {
     opacity: 1;
   }
 
@@ -148,6 +150,24 @@
   }
   #ingredientInput::placeholder {
     color: #b77a4a;
+  }
+
+  /* Get Recipes button */
+  #get-recipes-btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #d2691e;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(210, 105, 30, 0.5);
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+    margin-bottom: 20px;
+  }
+  #get-recipes-btn:hover {
+    background-color: #b05300;
   }
 
   /* Responsive for smaller screens */
@@ -177,49 +197,49 @@
   <div class="category">
     <h3>Vegetables</h3>
     <ul class="ingredientList">
-      <li>Tomato</li>
-      <li>Onion</li>
-      <li>Garlic</li>
-      <li>Carrot</li>
-      <li>Spinach</li>
-      <li>Broccoli</li>
-      <li>Bell Pepper</li>
+      <li class="ingredient-item">Tomato</li>
+      <li class="ingredient-item">Onion</li>
+      <li class="ingredient-item">Garlic</li>
+      <li class="ingredient-item">Carrot</li>
+      <li class="ingredient-item">Spinach</li>
+      <li class="ingredient-item">Broccoli</li>
+      <li class="ingredient-item">Bell Pepper</li>
     </ul>
   </div>
 
   <div class="category">
     <h3>Proteins</h3>
     <ul class="ingredientList">
-      <li>Chicken</li>
-      <li>Beef</li>
-      <li>Tofu</li>
-      <li>Eggs</li>
-      <li>Lentils</li>
-      <li>Fish</li>
+      <li class="ingredient-item">Chicken</li>
+      <li class="ingredient-item">Beef</li>
+      <li class="ingredient-item">Tofu</li>
+      <li class="ingredient-item">Eggs</li>
+      <li class="ingredient-item">Lentils</li>
+      <li class="ingredient-item">Fish</li>
     </ul>
   </div>
 
   <div class="category">
     <h3>Grains & Legumes</h3>
     <ul class="ingredientList">
-      <li>Rice</li>
-      <li>Quinoa</li>
-      <li>Beans</li>
-      <li>Pasta</li>
-      <li>Oats</li>
+      <li class="ingredient-item">Rice</li>
+      <li class="ingredient-item">Quinoa</li>
+      <li class="ingredient-item">Beans</li>
+      <li class="ingredient-item">Pasta</li>
+      <li class="ingredient-item">Oats</li>
     </ul>
   </div>
 
   <div class="category">
     <h3>Spices & Others</h3>
     <ul class="ingredientList">
-      <li>Salt</li>
-      <li>Pepper</li>
-      <li>Cumin</li>
-      <li>Olive Oil</li>
-      <li>Butter</li>
-      <li>Honey</li>
-      <li>Chili Flakes</li>
+      <li class="ingredient-item">Salt</li>
+      <li class="ingredient-item">Pepper</li>
+      <li class="ingredient-item">Cumin</li>
+      <li class="ingredient-item">Olive Oil</li>
+      <li class="ingredient-item">Butter</li>
+      <li class="ingredient-item">Honey</li>
+      <li class="ingredient-item">Chili Flakes</li>
     </ul>
   </div>
 </div>
@@ -229,23 +249,27 @@
   <div id="ingredientBox" tabindex="0" aria-label="Selected ingredients input">
     <input type="text" id="ingredientInput" placeholder="Type ingredient and press Enter" />
   </div>
+  <button id="get-recipes-btn" type="button">Get Recipes</button>
   <p>Click ingredients on the left or type your own and press Enter.</p>
+  <div id="recipes-container" style="white-space: pre-wrap; font-family: monospace; margin-top: 10px; color: #4a2c2a;"></div>
 </div>
 
 <script>
   const ingredientBox = document.getElementById('ingredientBox');
   const ingredientInput = document.getElementById('ingredientInput');
-  const ingredientLists = document.querySelectorAll('.ingredientList li');
+  const ingredientLists = document.querySelectorAll('.ingredient-item');
+  const getRecipesBtn = document.getElementById('get-recipes-btn');
+  const recipesContainer = document.getElementById('recipes-container');
 
   let ingredients = [];
 
   function renderIngredients() {
-    // Remove all ingredient tags except the input
-    ingredientBox.querySelectorAll('.ingredientTag').forEach(tag => tag.remove());
+    // Remove all ingredient chips except the input
+    ingredientBox.querySelectorAll('.ingredient-chip').forEach(tag => tag.remove());
 
     ingredients.forEach(ing => {
       const tag = document.createElement('span');
-      tag.className = 'ingredientTag';
+      tag.className = 'ingredient-chip';
       tag.textContent = ing;
 
       const removeX = document.createElement('span');
@@ -297,6 +321,42 @@
   ingredientBox.addEventListener('click', () => {
     ingredientInput.focus();
   });
+
+  // Function to call backend API to get recipes
+  async function fetchRecipes() {
+    if (ingredients.length === 0) {
+      recipesContainer.textContent = "Please add some ingredients first.";
+      return;
+    }
+
+    recipesContainer.textContent = "Loading recipes...";
+
+    try {
+      const response = await fetch("/.netlify/functions/recipes", {
+        method: "POST",
+        body: JSON.stringify({
+          ingredients: ingredients.join(", "),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.recipes) {
+        recipesContainer.textContent = data.recipes;
+      } else if (data.error) {
+        recipesContainer.textContent = `Error: ${data.error}`;
+      } else {
+        recipesContainer.textContent = "Unexpected error.";
+      }
+    } catch (err) {
+      recipesContainer.textContent = `Request failed: ${err.message}`;
+    }
+  }
+
+  getRecipesBtn.addEventListener('click', fetchRecipes);
 
   // Initial render
   renderIngredients();
