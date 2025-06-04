@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ingredient Picker</title>
+
+<!-- Google Font for cozy kitchen vibe -->
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
+
+<style>
+  body {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Comfortaa', cursive, Arial, sans-serif;
+    background: linear-gradient(135deg, #f7e5d7, #f4cba1);
+    color: #4a2c2a;
+
+    /* prevent shrinking */
+    overflow: hidden;
+  }
+
+  /* Left column */
+  #leftCol {
+    width: 320px;
+    min-width: 320px;     /* prevent shrinking */
+    flex-shrink: 0;       /* do not allow shrinking */
+    background: #fff8f0;
+    border-right: 3px solid #d2691e;
+    padding: 20px;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  #leftCol h2 {
+    margin-top: 0;
+    color: #a0522d;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .category {
+    margin-bottom: 18px;
+  }
+  .category h3 {
+    margin-bottom: 8px;
+    color: #8b4513;
+    border-bottom: 1px solid #d2691e;
+    padding-bottom: 4px;
+    font-size: 18px;
+  }
+  .ingredientList {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ingredientList li {
+    background: #f1c27d;
+    border-radius: 16px;
+    padding: 6px 14px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 2px 5px rgba(210,105,30,0.3);
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+  }
+  .ingredientList li:hover {
+    background: #d2691e;
+    color: white;
+  }
+
+  /* Right column */
+  #rightCol {
+    flex-grow: 1;
+    min-width: 0;         /* important to allow flex shrink internally */
+    background: #fff0e6;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;     /* scroll if content too tall */
+  }
+
+  /* Ingredient box container */
+  #ingredientBox {
+    min-height: 120px;
+    border: 2px solid #d2691e;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    background: #fffaf0;
+    cursor: text;
+    outline: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    box-shadow: inset 0 2px 5px rgba(210,105,30,0.25);
+    align-items: center;
+  }
+
+  /* Ingredient tags */
+  .ingredientTag {
+    background: #d2691e;
+    color: white;
+    border-radius: 18px;
+    padding: 6px 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    position: relative;
+    transition: background-color 0.3s ease;
+    font-size: 15px;
+  }
+  .ingredientTag:hover {
+    background: #b05300;
+  }
+
+  /* Remove X */
+  .removeX {
+    margin-left: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #ffe6cc;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .ingredientTag:hover .removeX {
+    opacity: 1;
+  }
+
+  /* Input inside ingredient box */
+  #ingredientInput {
+    flex-grow: 1;
+    border: none;
+    font-size: 16px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    outline: none;
+    min-width: 140px;
+    background: #fff6f0;
+    color: #4a2c2a;
+    box-shadow: inset 0 1px 3px rgba(210,105,30,0.3);
+    font-family: 'Comfortaa', cursive, Arial, sans-serif;
+  }
+  #ingredientInput::placeholder {
+    color: #b77a4a;
+  }
+
+  /* Responsive for smaller screens */
+  @media (max-width: 720px) {
+    body {
+      flex-direction: column;
+      height: auto;
+    }
+    #leftCol {
+      width: 100%;
+      border-right: none;
+      border-bottom: 3px solid #d2691e;
+      padding: 15px 20px;
+      max-height: 200px;
+    }
+    #rightCol {
+      padding: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="leftCol">
+  <h2>Common Ingredients</h2>
+
+  <div class="category">
+    <h3>Vegetables</h3>
+    <ul class="ingredientList">
+      <li>Tomato</li>
+      <li>Onion</li>
+      <li>Garlic</li>
+      <li>Carrot</li>
+      <li>Spinach</li>
+      <li>Broccoli</li>
+      <li>Bell Pepper</li>
+    </ul>
+  </div>
+
+  <div class="category">
+    <h3>Proteins</h3>
+    <ul class="ingredientList">
+      <li>Chicken</li>
+      <li>Beef</li>
+      <li>Tofu</li>
+      <li>Eggs</li>
+      <li>Lentils</li>
+      <li>Fish</li>
+    </ul>
+  </div>
+
+  <div class="category">
+    <h3>Grains & Legumes</h3>
+    <ul class="ingredientList">
+      <li>Rice</li>
+      <li>Quinoa</li>
+      <li>Beans</li>
+      <li>Pasta</li>
+      <li>Oats</li>
+    </ul>
+  </div>
+
+  <div class="category">
+    <h3>Spices & Others</h3>
+    <ul class="ingredientList">
+      <li>Salt</li>
+      <li>Pepper</li>
+      <li>Cumin</li>
+      <li>Olive Oil</li>
+      <li>Butter</li>
+      <li>Honey</li>
+      <li>Chili Flakes</li>
+    </ul>
+  </div>
+</div>
+
+<div id="rightCol">
+  <h2>Your Ingredients</h2>
+  <div id="ingredientBox" tabindex="0" aria-label="Selected ingredients input">
+    <input type="text" id="ingredientInput" placeholder="Type ingredient and press Enter" />
+  </div>
+  <p>Click ingredients on the left or type your own and press Enter.</p>
+</div>
+
+<script>
+  const ingredientBox = document.getElementById('ingredientBox');
+  const ingredientInput = document.getElementById('ingredientInput');
+  const ingredientLists = document.querySelectorAll('.ingredientList li');
+
+  let ingredients = [];
+
+  function renderIngredients() {
+    // Remove all ingredient tags except the input
+    ingredientBox.querySelectorAll('.ingredientTag').forEach(tag => tag.remove());
+
+    ingredients.forEach(ing => {
+      const tag = document.createElement('span');
+      tag.className = 'ingredientTag';
+      tag.textContent = ing;
+
+      const removeX = document.createElement('span');
+      removeX.className = 'removeX';
+      removeX.textContent = '×';
+      removeX.title = 'Remove ingredient';
+      removeX.addEventListener('click', e => {
+        e.stopPropagation();
+        removeIngredient(ing);
+      });
+
+      tag.appendChild(removeX);
+      ingredientBox.insertBefore(tag, ingredientInput);
+    });
+  }
+
+  function addIngredient(ing) {
+    ing = ing.trim();
+    if (!ing) return;
+    if (!ingredients.some(i => i.toLowerCase() === ing.toLowerCase())) {
+      ingredients.push(ing);
+      renderIngredients();
+    }
+  }
+
+  function removeIngredient(ing) {
+    ingredients = ingredients.filter(i => i.toLowerCase() !== ing.toLowerCase());
+    renderIngredients();
+  }
+
+  // Click ingredients from left list
+  ingredientLists.forEach(item => {
+    item.addEventListener('click', () => {
+      addIngredient(item.textContent);
+      ingredientInput.focus();
+    });
+  });
+
+  // Handle enter key in input field
+  ingredientInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addIngredient(ingredientInput.value);
+      ingredientInput.value = '';
+    }
+  });
+
+  // Focus input when clicking the ingredient box container
+  ingredientBox.addEventListener('click', () => {
+    ingredientInput.focus();
+  });
+
+  // Initial render
+  renderIngredients();
+</script>
+
+</body>
+</html>
