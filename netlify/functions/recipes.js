@@ -31,10 +31,8 @@ exports.handler = async function(event, context) {
     const prompt = `Suggest 3 easy recipes using these ingredients: ${ingredients}. Format as a numbered list with recipe names, ingredient quantities, and step-by-step directions for each.`;
 
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/google/flan-t5-small",
-      {
-        inputs: prompt,
-      },
+      "https://api-inference.huggingface.co/models/bigscience/bloom-560m",
+      { inputs: prompt },
       {
         headers: {
           Authorization: `Bearer ${process.env.HF_API_KEY}`,
