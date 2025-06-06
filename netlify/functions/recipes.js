@@ -1,8 +1,4 @@
-const OpenAI = require("openai");
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const axios = require("axios");
 
 exports.handler = async function(event, context) {
   if (event.httpMethod !== "POST") {
@@ -32,23 +28,30 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    const prompt = `Suggest 3 easy recipes using these ingredients: ${ingredients}. Format as a numbered list with recipe names and brief descriptions.`;
+    const prompt = `Suggest 3 easy recipes using these ingredients: ${ingredients}. Format as a numbered list with recipe names, ingredient quantities, and step-by-step directions for each.`;
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 500,
-      temperature: 0.7,
-    });
+    const response = await axios.post(
+      "https://api-inference.huggingface.co/models/google/flan-t5-small",
+      {
+        inputs: prompt,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.HF_API_KEY}`,
+        },
+      }
+    );
+
+    const generatedText = response.data[0]?.generated_text;
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ recipes: completion.choices[0].message.content.trim() }),
+      body: JSON.stringify({ recipes: generatedText || "No recipes found." }),
     };
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message || "OpenAI request failed" }),
+      body: JSON.stringify({ error: error.message || "Hugging Face request failed" }),
     };
   }
 };
