@@ -1,4 +1,4 @@
-const { Configuration, OpenAIApi } = require("openai");
+const OpenAI = require("openai");
 
 exports.handler = async function(event, context) {
   console.log("🔸 Incoming request:", event);
@@ -37,13 +37,13 @@ exports.handler = async function(event, context) {
     const prompt = `Suggest 3 easy recipes using these ingredients: ${ingredients}. Format as a numbered list with recipe names, ingredient quantities, and step-by-step directions for each.`;
     console.log("🔸 Prompt being sent to OpenAI:", prompt);
 
-    // OpenAI config
-    const configuration = new Configuration({
+    // New OpenAI client init
+    const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
-    const openai = new OpenAIApi(configuration);
 
-    const response = await openai.createChatCompletion({
+    // New chat completion call
+    const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
         { role: "system", content: "You are a helpful recipe generator." },
@@ -51,9 +51,9 @@ exports.handler = async function(event, context) {
       ],
     });
 
-    console.log("✅ OpenAI API response:", response.data);
+    console.log("✅ OpenAI API response:", response);
 
-    const generatedText = response.data.choices[0].message.content;
+    const generatedText = response.choices[0].message.content;
 
     return {
       statusCode: 200,
