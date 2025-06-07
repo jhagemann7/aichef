@@ -1,4 +1,4 @@
-const axios = require("axios");
+const { Configuration, OpenAIApi } = require("openai");
 
 exports.handler = async function(event, context) {
   console.log("🔸 Incoming request:", event);
@@ -35,23 +35,25 @@ exports.handler = async function(event, context) {
 
   try {
     const prompt = `Suggest 3 easy recipes using these ingredients: ${ingredients}. Format as a numbered list with recipe names, ingredient quantities, and step-by-step directions for each.`;
-    console.log("🔸 Prompt being sent to Hugging Face:", prompt);
+    console.log("🔸 Prompt being sent to OpenAI:", prompt);
 
-    const response = await axios.post(
-      "https://api-inference.huggingface.co/models/google/flan-t5-small",
-      {
-        inputs: prompt,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.HF_API_KEY}`,
-        },
-      }
-    );
+    // OpenAI config
+    const configuration = new Configuration({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
 
-    console.log("✅ Hugging Face API response:", response.data);
+    const response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        { role: "system", content: "You are a helpful recipe generator." },
+        { role: "user", content: prompt },
+      ],
+    });
 
-    const generatedText = response.data[0]?.generated_text;
+    console.log("✅ OpenAI API response:", response.data);
+
+    const generatedText = response.data.choices[0].message.content;
 
     return {
       statusCode: 200,
@@ -59,10 +61,10 @@ exports.handler = async function(event, context) {
     };
 
   } catch (error) {
-    console.error("❌ API request failed:", error);
+    console.error("❌ OpenAI API request failed:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message || "Hugging Face request failed" }),
+      body: JSON.stringify({ error: error.message || "OpenAI request failed" }),
     };
   }
 };
