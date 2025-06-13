@@ -388,7 +388,13 @@
         recipeList.forEach((recipeText) => {
           const recipeDiv = document.createElement("div");
           recipeDiv.className = "recipe-box";
-          recipeDiv.textContent = recipeText.trim();
+
+          // Convert newlines to <br> for HTML display
+          const html = recipeText.trim()
+            .replace(/\n\n/g, '</p><p>')    // double newlines to paragraphs
+            .replace(/\n/g, '<br>');         // single newlines to <br>
+
+          recipeDiv.innerHTML = `<p>${html}</p>`;
           recipesContainer.appendChild(recipeDiv);
         });
 
