@@ -34,7 +34,12 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    const prompt = `Suggest 3 easy recipes using these ingredients: ${ingredients}. Format as a numbered list with recipe names, ingredient quantities, and step-by-step directions for each.`;
+    const prompt = `Suggest 3 easy recipes using ONLY the following ingredients: ${ingredients}. Do not add any additional ingredients or substitutions. If no recipes are possible with these exact ingredients, reply with "No recipes possible with these ingredients." 
+
+    Format the response as a numbered list, where each recipe includes:
+    - Recipe Name
+    - Ingredient list with quantities (using only the provided ingredients)
+    - Step-by-step directions.`;
     console.log("🔸 Prompt being sent to OpenAI:", prompt);
 
     // New OpenAI client init

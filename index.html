@@ -170,6 +170,18 @@
     background-color: #b05300;
   }
 
+  .recipe-box {
+    background: #fffaf0;
+    border: 2px solid #d2691e;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    font-family: 'Comfortaa', cursive, Arial, sans-serif;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+
   /* Responsive for smaller screens */
   @media (max-width: 720px) {
     body {
@@ -325,11 +337,11 @@
   // Function to call backend API to get recipes
   async function fetchRecipes() {
     if (ingredients.length === 0) {
-      recipesContainer.textContent = "Please add some ingredients first.";
+      recipesContainer.innerHTML = "<p>Please add some ingredients first.</p>";
       return;
     }
 
-    recipesContainer.textContent = "Loading recipes...";
+    recipesContainer.innerHTML = "<p>Loading recipes...</p>";
 
     try {
       const response = await fetch("/.netlify/functions/recipes", {
@@ -345,17 +357,27 @@
       const data = await response.json();
 
       if (data.recipes) {
-        recipesContainer.textContent = data.recipes;
+        // Split recipes by numbered headings (like '1.', '2.', etc)
+        const recipeList = data.recipes.split(/\n(?=\d+\.\s)/);
+
+        recipesContainer.innerHTML = ""; // Clear previous content
+
+        recipeList.forEach((recipeText) => {
+          const recipeDiv = document.createElement("div");
+          recipeDiv.className = "recipe-box";
+          recipeDiv.textContent = recipeText.trim();
+          recipesContainer.appendChild(recipeDiv);
+        });
+
       } else if (data.error) {
-        recipesContainer.textContent = `Error: ${data.error}`;
+        recipesContainer.innerHTML = `<p>Error: ${data.error}</p>`;
       } else {
-        recipesContainer.textContent = "Unexpected error.";
+        recipesContainer.innerHTML = "<p>Unexpected error.</p>";
       }
     } catch (err) {
-      recipesContainer.textContent = `Request failed: ${err.message}`;
+      recipesContainer.innerHTML = `<p>Request failed: ${err.message}</p>`;
     }
   }
-
   getRecipesBtn.addEventListener('click', fetchRecipes);
 
   // Initial render
