@@ -71,6 +71,7 @@ async function fetchRecipes() {
     });
 
     const data = await response.json();
+    console.log(data);  // add this line to see what's coming back
 
     if (data.recipes) {
       recipesContainer.innerHTML = `<pre>${data.recipes}</pre>`;
