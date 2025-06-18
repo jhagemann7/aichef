@@ -19,11 +19,18 @@
 <style>
   body {
     display: flex;
+    flex-direction: column;
     height: 100vh;
     margin: 0;
     font-family: 'Comfortaa', cursive, Arial, sans-serif;
     background: linear-gradient(135deg, #f7e5d7, #f4cba1);
     color: #4a2c2a;
+    overflow: hidden;
+  }
+
+  .main-content {
+    display: flex;
+    flex: 1;
     overflow: hidden;
   }
 
@@ -157,7 +164,7 @@
   .ingredient-item {
     /* no extra styles needed beyond li */
   }
-
+  
   /* Right column */
   #rightCol {
     flex-grow: 1;
@@ -290,7 +297,7 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Ingredient Recipe Finder",
-      "url": "https://your-site-url.com",
+      "url": "https://pantrypalai.com",
       "description": "Instantly get AI-generated recipes using only the ingredients you have on hand.",
       "applicationCategory": "LifestyleApplication",
       "operatingSystem": "All",
@@ -324,6 +331,7 @@
   </ul>
 </nav>
 
+<div class="main-content">
 <div id="leftCol">
   <h2>Common Ingredients</h2>
 
@@ -385,6 +393,7 @@
   <button id="get-recipes-btn" type="button">Get Recipes</button>
   <p>Click ingredients on the left or type your own and press Enter.</p>
   <div id="recipes-container" style="white-space: pre-wrap; font-family: monospace; margin-top: 10px; color: #4a2c2a;"></div>
+</div>
 </div>
 
 <script>
