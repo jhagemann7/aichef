@@ -31,6 +31,7 @@
   }
   </script>
 
+
   <style>
     body {
       font-family: 'Comfortaa', cursive, sans-serif;
@@ -186,7 +187,7 @@
   <div class="container">
     <h1>Contact Pantry Pal Ai</h1>
 
-    <form name="contact" method="POST" data-netlify="true">
+    <form id="contact-form" name="contact" method="POST" data-netlify="true">
       <input type="hidden" name="form-name" value="contact" />
       <label for="name">Name</label>
       <input type="text" id="name" name="name" required />
@@ -201,6 +202,11 @@
     </form>
   </div>
 
+    <div id="thank-you-message" style="display:none; margin-top: 20px; font-size: 1.2rem; color: #a0522d;">
+      Thanks for your message! We’ll get back to you soon.
+    </div>
+
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const toggleButton = document.querySelector('.navbar-toggle');
@@ -210,6 +216,25 @@
         const expanded = toggleButton.getAttribute('aria-expanded') === 'true' || false;
         toggleButton.setAttribute('aria-expanded', !expanded);
         navLinks.classList.toggle('show');
+      });
+
+      // Form submission handling
+      const form = document.getElementById('contact-form');
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const encodedData = new URLSearchParams(formData).toString();
+
+        fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: encodedData
+        })
+        .then(() => {
+          form.style.display = 'none';
+          document.getElementById('thank-you-message').style.display = 'block';
+        })
+        .catch((error) => alert(error));
       });
     });
   </script>
