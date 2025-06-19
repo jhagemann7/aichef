@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pantry Pal Ai FAQ | How It Works & Tips</title>
+  <meta name="description" content="Answers to frequently asked questions about Pantry Pal Ai, how to use it, and how recipes are generated from your ingredients." />
+
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Comfortaa', cursive, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff8f0;
+      color: #4a2c2a;
+    }
+
+    .navbar { /* same navbar CSS from your blog or main page */ }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      color: #a0522d;
+      margin-bottom: 30px;
+    }
+
+    .faq-item {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #d2691e;
+      padding-bottom: 12px;
+    }
+
+    .faq-question {
+      font-size: 1.2rem;
+      cursor: pointer;
+      font-weight: bold;
+      color: #d2691e;
+    }
+
+    .faq-answer {
+      display: none;
+      margin-top: 8px;
+      font-size: 1rem;
+    }
+
+    .faq-question.open + .faq-answer {
+      display: block;
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Pantry Pal Ai?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pantry Pal Ai is a free tool that generates recipe ideas based on the ingredients you have on hand."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I use it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply select or type in your available ingredients, click 'Get Recipes', and Pantry Pal Ai will suggest AI-generated recipes using what you have."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it really free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — it’s completely free to use!"
+        }
+      }
+    ]
+  }
+  </script>
+
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-left">
+      <a href="/" class="site-brand">
+        <img src="/static/favicon.ico" alt="Pantry Pal Ai" class="favicon" />
+        <span class="site-title">Pantry Pal Ai</span>
+      </a>
+    </div>
+
+    <button class="navbar-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      &#9776;
+    </button>
+
+    <ul class="navbar-links">
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/faq">FAQ</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Frequently Asked Questions</h1>
+
+    <div class="faq-item">
+      <div class="faq-question">What is Pantry Pal Ai?</div>
+      <div class="faq-answer">Pantry Pal Ai is a free tool that generates recipe ideas based on the ingredients you have on hand.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">How do I use it?</div>
+      <div class="faq-answer">Simply select or type in your available ingredients, click 'Get Recipes', and Pantry Pal Ai will suggest AI-generated recipes using what you have.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Is it really free?</div>
+      <div class="faq-answer">Yes — it’s completely free to use!</div>
+    </div>
+
+    <!-- Add more FAQs as needed -->
+
+  </div>
+
+  <script>
+    // FAQ toggle
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        question.classList.toggle('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
