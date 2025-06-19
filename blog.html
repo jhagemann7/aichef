@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pantry Pal Ai Blog | Recipes & Kitchen Hacks</title>
+  <meta name="description" content="Explore Pantry Pal Ai’s blog for cooking tips, AI recipe ideas, and kitchen hacks using only what you have in your pantry." />
+
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Comfortaa', cursive, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff8f0;
+      color: #4a2c2a;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    h1 {
+      font-size: 2.4rem;
+      color: #a0522d;
+      margin-bottom: 30px;
+    }
+    .post-card {
+      background: #fffaf0;
+      padding: 20px;
+      border: 2px solid #d2691e;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    .post-card:hover {
+      box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+    }
+    .post-card h2 {
+      font-size: 1.5rem;
+      margin: 0 0 10px;
+      color: #b05300;
+    }
+    .meta {
+      font-size: 0.9rem;
+      color: #777;
+      margin-bottom: 14px;
+    }
+    .excerpt {
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+    .read-more {
+      color: #d2691e;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .read-more:hover {
+      text-decoration: underline;
+    }
+    .featured-img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Pantry Pal Ai Blog</h1>
+  <div id="blog-posts"></div>
+</div>
+
+<script>
+  fetch("/.netlify/functions/getBlogPosts")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("blog-posts");
+
+      if (!data.posts || data.posts.length === 0) {
+        container.innerHTML = "<p>No posts found.</p>";
+        return;
+      }
+
+      data.posts.forEach(post => {
+        const div = document.createElement("div");
+        div.className = "post-card";
+
+        const date = new Date(post.publishDate).toLocaleDateString();
+
+        div.innerHTML = `
+          <h2>${post.title}</h2>
+          <div class="meta">By ${post.author} • ${date}</div>
+          ${post.featuredImageUrl ? `<img src="${post.featuredImageUrl}" alt="${post.title}" class="featured-img">` : ''}
+          <p class="excerpt">${post.excerpt}</p>
+          <a href="/blog-post.html?slug=${post.slug}" class="read-more">Read more →</a>
+        `;
+
+        container.appendChild(div);
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("blog-posts").innerHTML = "<p>Failed to load posts.</p>";
+    });
+</script>
+
+</body>
+</html>
