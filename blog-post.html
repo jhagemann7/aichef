@@ -76,45 +76,55 @@
   <div class="body-content" id="post-body"></div>
 </div>
 
-<script>
-  // Get slug from URL query params
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get('slug');
+  <script>
+    // Get slug from URL query params
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug');
 
-  if (!slug) {
-    document.getElementById('post-title').textContent = "Post not found.";
-  } else {
-    fetch(`/.netlify/functions/getBlogPostBySlug?slug=${slug}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.post) {
-          const post = data.post;
+    if (!slug) {
+      document.getElementById('post-title').textContent = "Post not found.";
+    } else {
+      fetch(`/.netlify/functions/getBlogPostBySlug?slug=${slug}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.post) {
+            const post = data.post;
 
-          // Set meta tags dynamically
-          document.title = post.seoMetaTitle || post.title;
-          document.querySelector('meta[name="description"]').setAttribute('content', post.seoMetaDesc || post.excerpt);
+            // Set meta tags dynamically
+            document.title = post.seoMetaTitle || post.title;
+            document.querySelector('meta[name="description"]').setAttribute('content', post.seoMetaDesc || post.excerpt);
 
-          document.getElementById('post-title').textContent = post.title;
-          document.getElementById('post-meta').innerHTML = `By ${post.author} • ${new Date(post.publishDate).toLocaleDateString()}`;
+            // Add or update canonical link tag
+            let canonical = document.querySelector("link[rel='canonical']");
+            if (!canonical) {
+              canonical = document.createElement('link');
+              canonical.setAttribute('rel', 'canonical');
+              document.head.appendChild(canonical);
+            }
+            canonical.setAttribute('href', `https://pantrypalai.com/blog-post.html?slug=${slug}`);
 
-          if (post.featuredImageUrl) {
-            const img = document.getElementById('featured-img');
-            img.src = post.featuredImageUrl;
-            img.alt = post.title;
-            img.style.display = 'block';
+            document.getElementById('post-title').textContent = post.title;
+            document.getElementById('post-meta').innerHTML = `By ${post.author} • ${new Date(post.publishDate).toLocaleDateString()}`;
+
+            if (post.featuredImageUrl) {
+              const img = document.getElementById('featured-img');
+              img.src = post.featuredImageUrl;
+              img.alt = post.title;
+              img.style.display = 'block';
+            }
+
+            document.getElementById('post-body').innerHTML = post.bodyHtml;
+          } else {
+            document.getElementById('post-title').textContent = "Post not found.";
           }
+        })
+        .catch(err => {
+          document.getElementById('post-title').textContent = "Error loading post.";
+          console.error(err);
+        });
+    }
+  </script>
 
-          document.getElementById('post-body').innerHTML = post.bodyHtml;
-        } else {
-          document.getElementById('post-title').textContent = "Post not found.";
-        }
-      })
-      .catch(err => {
-        document.getElementById('post-title').textContent = "Error loading post.";
-        console.error(err);
-      });
-  }
-</script>
 
 </body>
 </html>

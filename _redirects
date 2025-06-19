@@ -1,0 +1,17 @@
+# Route clean URLs to their static HTML pages
+/contact        /contact.html       200
+/faq            /faq.html           200
+/blog           /blog.html          200
+
+# Route blog posts by slug to blog-post.html page
+/blog-post/*    /blog-post.html     200
+
+# Sitemap (if generated via Netlify Function)
+# If you're using a function at /.netlify/functions/sitemap
+/sitemap.xml    /.netlify/functions/sitemap  200
+
+# If it's a static sitemap file, uncomment this line instead:
+# /sitemap.xml  /sitemap.xml        200
+
+# Fallback: everything else to index.html for a SPA-like experience
+/*              /index.html         404
