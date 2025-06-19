@@ -79,6 +79,7 @@ async function generateBlogPosts() {
     const author = fields.author;
     const publishDate = fields.publishDate;
     const excerpt = fields.excerpt;
+    const featuredImageUrl = fields.featuredImage?.fields.file.url || null;
     const bodyHtml = renderRichText(fields.bodyContent);
 
     // Basic HTML template for each blog post
