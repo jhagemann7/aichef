@@ -117,27 +117,83 @@ async function generateBlogPosts() {
   return posts;
 }
 
+async function generateBlogIndex(posts) {
+  console.log('Generating blog index page...');
+
+  const baseUrl = 'https://pantrypalai.com';
+
+  const postsList = posts
+    .map(
+      (post) => `
+      <li>
+        <a href="/blog/${post.slug}">${post.title}</a>
+        <span style="font-size: 0.9rem; color: #555;"> — ${new Date(post.publishDate).toLocaleDateString()}</span>
+      </li>`
+    )
+    .join('\n');
+
+  const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog | Pantry Pal Ai</title>
+  <meta name="description" content="Explore the latest recipe tips, AI cooking ideas, and kitchen hacks from Pantry Pal Ai." />
+  <link rel="canonical" href="${baseUrl}/blog" />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Comfortaa', cursive, sans-serif; margin: 40px; color: #4a2c2a; background: #fff8f0; }
+    h1 { color: #a0522d; }
+    a { color: #d2691e; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+  <a href="/">← Home</a>
+  <h1>Pantry Pal Ai Blog</h1>
+  <ul>
+    ${postsList}
+  </ul>
+</body>
+</html>`;
+
+  const filepath = path.join(__dirname, 'blog', 'index.html');
+  await writeFile(filepath, html);
+}
+
 async function generateSitemap(posts) {
   console.log('Generating sitemap.xml...');
   const baseUrl = 'https://pantrypalai.com';
 
   // Base URLs for static pages
+  const latestPostDate = posts.length
+    ? new Date(posts[0].publishDate).toISOString().split('T')[0]
+    : new Date().toISOString().split('T')[0];
+
   const staticUrls = [
     { loc: baseUrl + '/', priority: 1.0 },
     { loc: baseUrl + '/faq', priority: 0.8 },
     { loc: baseUrl + '/contact', priority: 0.8 },
-    { loc: baseUrl + '/blog', priority: 0.9 },
+    {
+      loc: baseUrl + '/blog',
+      priority: 0.9,
+      lastmod: latestPostDate,
+    },
   ];
 
   const urlsXml = staticUrls
-    .map(
-      (page) => `
+  .map(
+    (page) => `
   <url>
     <loc>${page.loc}</loc>
+    ${page.lastmod ? `<lastmod>${page.lastmod}</lastmod>` : ''}
     <priority>${page.priority}</priority>
   </url>`
-    )
-    .join('\n');
+  )
+  .join('\n');
 
   // Add blog post URLs
   const blogUrlsXml = posts
@@ -164,6 +220,7 @@ ${blogUrlsXml}
 async function main() {
   try {
     const posts = await generateBlogPosts();
+    await generateBlogIndex(posts);
     await generateSitemap(posts);
     console.log('Build complete! Files saved to project root (blog posts in /blog and sitemap.xml)');
   } catch (error) {
