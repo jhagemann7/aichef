@@ -18,7 +18,46 @@
       color: #4a2c2a;
     }
 
-    .navbar { /* same navbar CSS from your blog or main page */ }
+    .navbar {
+      display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #fff8f0;
+        border-bottom: 3px solid #d2691e;
+        padding: 0 20px;
+        height: 50px;
+        box-sizing: border-box;
+        flex-shrink: 0;
+        width: 100%;
+      }
+      .navbar-left {
+        display: flex;
+        align-items: center;
+      }
+    .navbar-links {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+    }
+    .navbar-links li a {
+      text-decoration: none;
+      color: #4a2c2a;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .navbar-links li a:hover {
+      color: #d2691e;
+    }
+    .navbar-toggle {
+      display: none;
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #4a2c2a;
+    }
 
     .container {
       max-width: 900px;
@@ -53,6 +92,26 @@
 
     .faq-question.open + .faq-answer {
       display: block;
+    }
+    @media (max-width: 600px) {
+      .navbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 20px;
+      }
+      .navbar-toggle {
+        display: block;
+      }
+      .navbar-links {
+        width: 100%;
+        flex-direction: column;
+        display: none;
+        margin-top: 10px;
+        gap: 10px;
+      }
+      .navbar-links.show {
+        display: flex;
+      }
     }
   </style>
   <script type="application/ld+json">
@@ -133,6 +192,16 @@
   </div>
 
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleButton = document.querySelector('.navbar-toggle');
+      const navLinks = document.querySelector('.navbar-links');
+
+      toggleButton.addEventListener('click', () => {
+        const expanded = toggleButton.getAttribute('aria-expanded') === 'true' || false;
+        toggleButton.setAttribute('aria-expanded', !expanded);
+        navLinks.classList.toggle('show');
+      });
+    });
     // FAQ toggle
     document.querySelectorAll('.faq-question').forEach(question => {
       question.addEventListener('click', () => {
