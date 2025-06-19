@@ -7,6 +7,107 @@ const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
 });
 
+const navbarHtml = `
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="navbar-left">
+    <a href="/" class="site-brand">
+      <img src="/static/favicon.ico" alt="Pantry Pal Ai" class="favicon" />
+      <span class="site-title">Pantry Pal Ai</span>
+    </a>
+  </div>
+
+  <button class="navbar-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    &#9776;
+  </button>
+
+  <ul class="navbar-links">
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/faq">FAQ</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+</nav>
+`;
+
+const navbarStyles = `
+<style>
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff8f0;
+    border-bottom: 3px solid #d2691e;
+    padding: 0 20px;
+    height: 50px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    width: 100%;
+  }
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+  .site-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #4a2c2a;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+  .favicon {
+    height: 30px;
+    width: 30px;
+    margin-right: 8px;
+  }
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+  }
+  .navbar-links li a {
+    text-decoration: none;
+    color: #4a2c2a;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .navbar-links li a:hover {
+    color: #d2691e;
+  }
+  .navbar-toggle {
+    display: none;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #4a2c2a;
+  }
+
+  /* Responsive navbar for small screens */
+  @media (max-width: 600px) {
+    .navbar {
+      flex-wrap: wrap;
+      height: auto;
+      padding: 10px 20px;
+    }
+    .navbar-toggle {
+      display: block;
+    }
+    .navbar-links {
+      width: 100%;
+      flex-direction: column;
+      display: none;
+      margin-top: 10px;
+      gap: 10px;
+    }
+    .navbar-links.show {
+      display: flex;
+    }
+  }
+</style>
+`;
+
 // Helper to render rich text (simplified, you can adapt yours)
 function renderRichText(node) {
   if (!node) return '';
@@ -154,6 +255,7 @@ async function generateBlogIndex(posts) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+ ${navbarStyles}
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blog | Pantry Pal Ai</title>
@@ -170,7 +272,7 @@ async function generateBlogIndex(posts) {
   </style>
 </head>
 <body>
-  <a href="/">← Home</a>
+  ${navbarHtml}
   <h1>Pantry Pal Ai Blog</h1>
   <ul>
     ${postsList}
