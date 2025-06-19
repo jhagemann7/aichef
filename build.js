@@ -1,7 +1,6 @@
 const contentful = require('contentful');
 const fs = require('fs');
 const path = require('path');
-const mkdirp = require('mkdirp');
 
 const client = contentful.createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -52,7 +51,7 @@ function renderRichText(node) {
 
 // Helper to write a file, ensuring the folder exists
 async function writeFile(filepath, content) {
-  await mkdirp(path.dirname(filepath));
+  await fs.promises.mkdir(path.dirname(filepath), { recursive: true });
   fs.writeFileSync(filepath, content, 'utf-8');
 }
 
