@@ -9,8 +9,27 @@
   <!-- Favicon -->
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
 
+  <!-- Canonical fallback -->
+  <link rel="canonical" href="https://pantrypalai.com/blog-post.html">
+  
+  <meta name="robots" content="index, follow">
+
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="" />
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="" />
+  <meta property="og:url" content="" />
+  <meta property="og:type" content="article" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="" />
+  <meta name="twitter:description" content="" />
+  <meta name="twitter:image" content="" />
+
 
   <style>
     body {
@@ -76,55 +95,87 @@
   <div class="body-content" id="post-body"></div>
 </div>
 
-  <script>
-    // Get slug from URL query params
-    const params = new URLSearchParams(window.location.search);
-    const slug = params.get('slug');
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
 
-    if (!slug) {
-      document.getElementById('post-title').textContent = "Post not found.";
-    } else {
-      fetch(`/.netlify/functions/getBlogPostBySlug?slug=${slug}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.post) {
-            const post = data.post;
+  if (!slug) {
+    document.getElementById('post-title').textContent = "Post not found.";
+  } else {
+    fetch(`/.netlify/functions/getBlogPostBySlug?slug=${slug}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.post) {
+          const post = data.post;
 
-            // Set meta tags dynamically
-            document.title = post.seoMetaTitle || post.title;
-            document.querySelector('meta[name="description"]').setAttribute('content', post.seoMetaDesc || post.excerpt);
+          // Update meta title and description
+          document.title = post.seoMetaTitle || post.title;
+          document.querySelector('meta[name="description"]').setAttribute('content', post.seoMetaDesc || post.excerpt);
 
-            // Add or update canonical link tag
-            let canonical = document.querySelector("link[rel='canonical']");
-            if (!canonical) {
-              canonical = document.createElement('link');
-              canonical.setAttribute('rel', 'canonical');
-              document.head.appendChild(canonical);
-            }
-            canonical.setAttribute('href', `https://pantrypalai.com/blog-post.html?slug=${slug}`);
-
-            document.getElementById('post-title').textContent = post.title;
-            document.getElementById('post-meta').innerHTML = `By ${post.author} • ${new Date(post.publishDate).toLocaleDateString()}`;
-
-            if (post.featuredImageUrl) {
-              const img = document.getElementById('featured-img');
-              img.src = post.featuredImageUrl;
-              img.alt = post.title;
-              img.style.display = 'block';
-            }
-
-            document.getElementById('post-body').innerHTML = post.bodyHtml;
-          } else {
-            document.getElementById('post-title').textContent = "Post not found.";
+          // Add or update canonical link tag
+          let canonical = document.querySelector("link[rel='canonical']");
+          if (!canonical) {
+            canonical = document.createElement('link');
+            canonical.setAttribute('rel', 'canonical');
+            document.head.appendChild(canonical);
           }
-        })
-        .catch(err => {
-          document.getElementById('post-title').textContent = "Error loading post.";
-          console.error(err);
-        });
-    }
-  </script>
+          canonical.setAttribute('href', `https://pantrypalai.com/blog-post.html?slug=${slug}`);
 
+          // Open Graph and Twitter meta tags
+          document.querySelector("meta[property='og:title']").setAttribute('content', post.seoMetaTitle || post.title);
+          document.querySelector("meta[property='og:description']").setAttribute('content', post.seoMetaDesc || post.excerpt);
+          document.querySelector("meta[property='og:image']").setAttribute('content', post.featuredImageUrl || 'https://pantrypalai.com/static/Social-Share.jpg');
+          document.querySelector("meta[property='og:url']").setAttribute('content', `https://pantrypalai.com/blog-post.html?slug=${slug}`);
+
+          document.querySelector("meta[name='twitter:title']").setAttribute('content', post.seoMetaTitle || post.title);
+          document.querySelector("meta[name='twitter:description']").setAttribute('content', post.seoMetaDesc || post.excerpt);
+          document.querySelector("meta[name='twitter:image']").setAttribute('content', post.featuredImageUrl || 'https://pantrypalai.com/static/Social-Share.jpg');
+
+          // JSON-LD structured data
+          const ldJson = {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "description": post.seoMetaDesc || post.excerpt,
+            "image": post.featuredImageUrl || "https://pantrypalai.com/static/Social-Share.jpg",
+            "author": {
+              "@type": "Person",
+              "name": post.author
+            },
+            "datePublished": post.publishDate,
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": `https://pantrypalai.com/blog-post.html?slug=${slug}`
+            }
+          };
+          const script = document.createElement('script');
+          script.type = 'application/ld+json';
+          script.textContent = JSON.stringify(ldJson);
+          document.head.appendChild(script);
+
+          // Populate content
+          document.getElementById('post-title').textContent = post.title;
+          document.getElementById('post-meta').innerHTML = `By ${post.author} • ${new Date(post.publishDate).toLocaleDateString()}`;
+
+          if (post.featuredImageUrl) {
+            const img = document.getElementById('featured-img');
+            img.src = post.featuredImageUrl;
+            img.alt = post.title;
+            img.style.display = 'block';
+          }
+
+          document.getElementById('post-body').innerHTML = post.bodyHtml;
+
+        } else {
+          document.getElementById('post-title').textContent = "Post not found.";
+        }
+      })
+      .catch(err => {
+        document.getElementById('post-title').textContent = "Error loading post.";
+        console.error(err);
+      });
+  }
+</script>
 
 </body>
 </html>
