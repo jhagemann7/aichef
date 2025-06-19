@@ -128,7 +128,7 @@ async function generateBlogPosts() {
     const filepath = path.join(__dirname, 'blog', slug, 'index.html');
     await writeFile(filepath, html);
 
-    posts.push({ slug, publishDate });
+    posts.push({ slug, publishDate, title, featuredImageUrl });
   }
 
   return posts;
@@ -143,6 +143,7 @@ async function generateBlogIndex(posts) {
     .map(
       (post) => `
       <li>
+        ${post.featuredImageUrl ? `<img src="${post.featuredImageUrl}" alt="${post.title}" style="max-width: 300px; height: auto; border-radius: 6px; display: block; margin-bottom: 8px;" />` : ''}
         <a href="/blog/${post.slug}">${post.title}</a>
         <span style="font-size: 0.9rem; color: #555;"> — ${new Date(post.publishDate).toLocaleDateString()}</span>
       </li>`
