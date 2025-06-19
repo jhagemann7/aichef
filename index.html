@@ -6,6 +6,22 @@
 <title>Smart Ingredient Recipe Finder | AI Cooking Ideas</title>
 
 <meta name="description" content="Enter your available ingredients and get AI-generated recipes instantly. Easy, simple, and only using what you have." />
+  <!-- Robots meta tag -->
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Pantry Pal Ai – Smart Ingredient Recipe Finder" />
+  <meta property="og:description" content="Enter your available ingredients and get AI-generated recipes instantly. Easy, simple, and only using what you have." />
+  <meta property="og:image" content="https://pantrypalai.com/static/Social-Share.jpg" />
+  <meta property="og:url" content="https://pantrypalai.com/" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pantry Pal Ai – Smart Ingredient Recipe Finder" />
+  <meta name="twitter:description" content="Enter your available ingredients and get AI-generated recipes instantly. Easy, simple, and only using what you have." />
+  <meta name="twitter:image" content="https://pantrypalai.com/static/Social-Share.jpg" />
+
 
 <link rel="canonical" href="https://pantrypalai.com/" />
 
@@ -312,7 +328,7 @@
 <body>
 
 <!-- Navbar added here -->
-<nav class="navbar">
+<nav class="navbar" role="navigation" aria-label="Main navigation">
   <div class="navbar-left">
     <a href="/" class="site-brand">
       <img src="/static/favicon.ico" alt="Pantry Pal Ai" class="favicon" />
@@ -331,7 +347,10 @@
   </ul>
 </nav>
 
-<div class="main-content">
+<main class="main-content" role="main" aria-label="Ingredient recipe finder app">
+  <h1 style="width: 100%; padding: 20px; color: #a0522d; font-weight: 700; font-size: 2.4rem; margin: 0;">
+    Pantry Pal Ai – Smart Ingredient Recipe Finder
+  </h1>
 <div id="leftCol">
   <h2>Common Ingredients</h2>
 
@@ -394,7 +413,7 @@
   <p>Click ingredients on the left or type your own and press Enter.</p>
   <div id="recipes-container" style="white-space: pre-wrap; font-family: monospace; margin-top: 10px; color: #4a2c2a;"></div>
 </div>
-</div>
+</main>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
