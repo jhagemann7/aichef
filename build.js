@@ -97,12 +97,28 @@ async function generateBlogPosts() {
     h1 { color: #a0522d; }
     a { color: #d2691e; }
     .author-date { font-style: italic; font-size: 0.9rem; margin-bottom: 20px; }
+    .featured-img {
+      width: 100%;
+      max-width: 900px;
+      height: auto;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .post-hero h1 {
+      color: #a0522d;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
   <a href="/blog">← Back to blog</a>
-  <h1>${title}</h1>
-  <div class="author-date">By ${author} | ${new Date(publishDate).toLocaleDateString()}</div>
+
+  <div class="post-hero">
+    ${featuredImageUrl ? `<img src="${featuredImageUrl}" alt="${title}" class="featured-img" />` : ''}
+    <h1>${title}</h1>
+    <div class="author-date">By ${author} | ${new Date(publishDate).toLocaleDateString()}</div>
+  </div>
+
   <article>${bodyHtml}</article>
 </body>
 </html>`;
