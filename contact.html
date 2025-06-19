@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact Pantry Pal Ai</title>
+  <meta name="description" content="Get in touch with the Pantry Pal Ai team for questions, suggestions, or feedback." />
+
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://pantrypalai.com/contact"
+    },
+    "name": "Contact Pantry Pal Ai",
+    "description": "Reach out to the Pantry Pal Ai team with your questions, suggestions, or feedback.",
+    "url": "https://pantrypalai.com/contact",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Pantry Pal Ai",
+      "url": "https://pantrypalai.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://pantrypalai.com/static/favicon.ico"
+      }
+    }
+  }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Comfortaa', cursive, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff8f0;
+      color: #4a2c2a;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff8f0;
+      border-bottom: 3px solid #d2691e;
+      padding: 0 20px;
+      height: 50px;
+      box-sizing: border-box;
+      flex-shrink: 0;
+      width: 100%;
+    }
+    .navbar-left {
+      display: flex;
+      align-items: center;
+    }
+    .site-brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: #4a2c2a;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .favicon {
+      height: 30px;
+      width: 30px;
+      margin-right: 8px;
+    }
+    .navbar-links {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+    }
+    .navbar-links li a {
+      text-decoration: none;
+      color: #4a2c2a;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .navbar-links li a:hover {
+      color: #d2691e;
+    }
+    .navbar-toggle {
+      display: none;
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #4a2c2a;
+    }
+    @media (max-width: 600px) {
+      .navbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 20px;
+      }
+      .navbar-toggle {
+        display: block;
+      }
+      .navbar-links {
+        width: 100%;
+        flex-direction: column;
+        display: none;
+        margin-top: 10px;
+        gap: 10px;
+      }
+      .navbar-links.show {
+        display: flex;
+      }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      color: #a0522d;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border: 2px solid #d2691e;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #d2691e;
+      color: #fff8f0;
+      border: none;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #b05300;
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-left">
+      <a href="/" class="site-brand">
+        <img src="/static/favicon.ico" alt="Pantry Pal Ai" class="favicon" />
+        <span class="site-title">Pantry Pal Ai</span>
+      </a>
+    </div>
+
+    <button class="navbar-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      &#9776;
+    </button>
+
+    <ul class="navbar-links">
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/faq">FAQ</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Contact Pantry Pal Ai</h1>
+
+    <form name="contact" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="contact" />
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="6" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleButton = document.querySelector('.navbar-toggle');
+      const navLinks = document.querySelector('.navbar-links');
+
+      toggleButton.addEventListener('click', () => {
+        const expanded = toggleButton.getAttribute('aria-expanded') === 'true' || false;
+        toggleButton.setAttribute('aria-expanded', !expanded);
+        navLinks.classList.toggle('show');
+      });
+    });
+  </script>
+
+</body>
+</html>
