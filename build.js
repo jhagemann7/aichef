@@ -389,6 +389,8 @@ async function generateBlogIndex(posts) {
       max-width: 900px;
       margin: 0 auto 60px;
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       flex-direction: column;
       gap: 30px;
     }
