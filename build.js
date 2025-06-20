@@ -264,6 +264,7 @@ async function generateBlogPosts() {
 </head>
 <body>
   ${navbarHtml}
+  <div class="container">
   <a href="/blog">← Back to blog</a>
 
   <div class="post-hero">
@@ -325,6 +326,7 @@ async function generateBlogIndex(posts) {
 </head>
 <body>
   ${navbarHtml}
+  <div class="container">
   <h1>Pantry Pal Ai Blog</h1>
   <ul>
     ${postsList}
