@@ -260,6 +260,11 @@ async function generateBlogPosts() {
       color: #a0522d;
       margin-bottom: 10px;
     }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
   </style>
 </head>
 <body>
@@ -323,6 +328,11 @@ async function generateBlogIndex(posts) {
     a:hover { text-decoration: underline; }
     ul { list-style: none; padding: 0; }
     li { margin-bottom: 12px; }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
   </style>
 </head>
 <body>
