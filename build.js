@@ -274,6 +274,7 @@ async function generateBlogPosts() {
   </div>
 
   <article>${bodyHtml}</article>
+  </div>
   ${navbarScript}
 </body>
 </html>`;
@@ -331,6 +332,7 @@ async function generateBlogIndex(posts) {
   <ul>
     ${postsList}
   </ul>
+  </div>
   ${navbarScript}
 </body>
 </html>`;
