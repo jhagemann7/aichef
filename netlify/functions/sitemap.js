@@ -13,10 +13,15 @@ exports.handler = async function(event, context) {
 
     const posts = entries.items;
 
+    const latestPostDate = posts.length
+    ? new Date(posts[0].sys.updatedAt).toISOString().split('T')[0]
+    : '2025-06-20';
+
     const urls = posts.map(item => {
       return `<url>
-        <loc>https://pantrypalai.com/blog-post.html?slug=${item.fields.slug}</loc>
-        <lastmod>${new Date(item.sys.updatedAt).toISOString()}</lastmod>
+        <loc>https://pantrypalai.com/blog/${item.fields.slug}</loc>
+        <lastmod>${new Date(item.sys.updatedAt).toISOString().split('T')[0]}</lastmod>
+        <priority>0.7</priority>
       </url>`;
     }).join('\n');
 
@@ -24,15 +29,23 @@ exports.handler = async function(event, context) {
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         <url>
           <loc>https://pantrypalai.com/</loc>
+          <lastmod>2025-06-20</lastmod>
+          <priority>1.0</priority>
         </url>
         <url>
           <loc>https://pantrypalai.com/blog</loc>
+          <lastmod>${latestPostDate}</lastmod>
+          <priority>1.0</priority>
         </url>
         <url>
           <loc>https://pantrypalai.com/faq</loc>
+          <lastmod>2025-06-20</lastmod>
+          <priority>1.0</priority>
         </url>
         <url>
           <loc>https://pantrypalai.com/contact</loc>
+          <lastmod>2025-06-20</lastmod>
+          <priority>1.0</priority>
         </url>
         ${urls}
       </urlset>

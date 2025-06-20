@@ -298,6 +298,28 @@ async function generateBlogPosts() {
       padding: 0 20px;
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "${title}",
+    "image": "${featuredImageUrl || ''}",
+    "author": {
+      "@type": "Person",
+      "name": "${author}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Pantry Pal Ai",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://pantrypalai.com/static/favicon.ico"
+      }
+    },
+    "datePublished": "${publishDate}",
+    "description": "${fields.seoMetaDesc || excerpt}"
+  }
+  </script>
 </head>
 <body>
   ${navbarHtml}
@@ -389,8 +411,6 @@ async function generateBlogIndex(posts) {
       max-width: 900px;
       margin: 0 auto 60px;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
       flex-direction: column;
       gap: 30px;
     }
@@ -431,6 +451,15 @@ async function generateBlogIndex(posts) {
       margin-left: 8px;
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Pantry Pal Ai Blog",
+    "url": "${baseUrl}/blog",
+    "description": "Explore the latest recipe tips, AI cooking ideas, and kitchen hacks from Pantry Pal Ai."
+  }
+  </script>
 </head>
 <body>
   ${navbarHtml}
