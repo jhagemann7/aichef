@@ -92,16 +92,28 @@ const navbarStyles = `
     padding: 0;
     gap: 20px;
   }
-
+  
+  .navbar-links li {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  
   .navbar-links li a {
     text-decoration: none;
     color: #4a2c2a;
     font-weight: 600;
     font-size: 1rem;
-    line-height: 50px; 
-    vertical-align: middle;
+    /* Option A: flex centering */
+    display: flex;
+    align-items: center;
+    /* line-height can be 1 or omitted */
+    line-height: 1;
+    /* remove vertical-align */
+    /* vertical-align: middle;  -- remove this */
   }
-
+  
   .navbar-links li a:hover {
     color: #d2691e;
   }
