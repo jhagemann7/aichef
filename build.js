@@ -408,47 +408,47 @@ async function generateBlogIndex(posts) {
     ul.posts-list {
       list-style: none;
       padding: 0;
-      max-width: 900px;
+      max-width: 1200px;
       margin: 0 auto 60px;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
     }
-  
+    
     ul.posts-list li {
-      border-bottom: 1px solid #d2691e;
-      padding-bottom: 20px;
-      max-width: 300px;
+      border: 1px solid #d2691e;
+      border-radius: 8px;
+      padding: 16px;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      text-align: center;
     }
-
+    
     ul.posts-list li img {
-      max-width: 300px;
+      max-width: 100%;
       height: auto;
       border-radius: 6px;
       display: block;
-      margin-bottom: 8px;
+      margin: 0 auto 8px;
     }
-  
+    
     ul.posts-list li a {
       display: block;
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: #4a2c2a;
       text-decoration: none;
+      margin: 12px 0 6px;
       word-wrap: break-word;
-      overflow-wrap: break-word;
-      max-width: 100%;
     }
-  
+    
     ul.posts-list li a:hover {
       color: #d2691e;
-      text-decoration: underline;
     }
-  
+    
     ul.posts-list li .date {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #555;
-      margin-left: 8px;
     }
   </style>
   <script type="application/ld+json">
