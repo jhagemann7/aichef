@@ -322,15 +322,15 @@ async function generateBlogIndex(posts) {
   const baseUrl = 'https://pantrypalai.com';
 
   const postsList = posts
-    .map(
-      (post) => `
+  .map(
+    (post) => `
       <li>
-        ${post.featuredImageUrl ? `<img src="${post.featuredImageUrl}" alt="${post.title}" style="max-width: 300px; height: auto; border-radius: 6px; display: block; margin-bottom: 8px;" />` : ''}
+        ${post.featuredImageUrl ? `<img src="${post.featuredImageUrl}" alt="${post.title}" style="max-width: 300px; height: auto; border-radius: 6px; display: block; margin-              bottom: 8px;" />` : ''}
         <a href="/blog/${post.slug}">${post.title}</a>
-        <span style="font-size: 0.9rem; color: #555;"> — ${new Date(post.publishDate).toLocaleDateString()}</span>
+        <span class="date">— ${new Date(post.publishDate).toLocaleDateString()}</span>
       </li>`
-    )
-    .join('\n');
+  )
+  .join('\n');
 
   const html = `
 <!DOCTYPE html>
@@ -351,15 +351,59 @@ async function generateBlogIndex(posts) {
       color: #4a2c2a;
       background: #fff8f0;
     }
-    h1 { color: #a0522d; }
-    a { color: #d2691e; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    ul { list-style: none; padding: 0; }
-    li { margin-bottom: 12px; }
+  
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #a0522d;
+    }
+  
+    a {
+      color: #d2691e;
+      text-decoration: none;
+    }
+  
+    a:hover {
+      text-decoration: underline;
+    }
+  
     .container {
       max-width: 900px;
       margin: 40px auto;
       padding: 0 20px;
+    }
+  
+    ul.posts-list {
+      list-style: none;
+      padding: 0;
+      max-width: 900px;
+      margin: 0 auto 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+  
+    ul.posts-list li {
+      border-bottom: 1px solid #d2691e;
+      padding-bottom: 20px;
+    }
+  
+    ul.posts-list li a {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #4a2c2a;
+      text-decoration: none;
+    }
+  
+    ul.posts-list li a:hover {
+      color: #d2691e;
+      text-decoration: underline;
+    }
+  
+    ul.posts-list li .date {
+      font-size: 0.9rem;
+      color: #555;
+      margin-left: 8px;
     }
   </style>
 </head>
@@ -367,7 +411,7 @@ async function generateBlogIndex(posts) {
   ${navbarHtml}
   <div class="container">
   <h1>Pantry Pal Ai Blog</h1>
-  <ul>
+  <ul class="posts-list">
     ${postsList}
   </ul>
   </div>
