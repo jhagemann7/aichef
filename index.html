@@ -293,78 +293,32 @@
   }
 
   /* Responsive for smaller screens */
-    @media (max-width: 720px) {
-      *, *::before, *::after {
-        box-sizing: border-box;
-      }
+  @media (max-width: 720px) {
+    .main-content {
+      flex-direction: column;
+    }
 
-      #rightCol {
-        width: 100% !important;
-        min-width: auto !important;
-        padding: 20px !important;
-        overflow-x: auto !important;
-        overflow-y: visible !important;
-        word-wrap: break-word;
-      }
+    #leftCol {
+      width: 100% !important;
+      min-width: auto !important;
+      height: 250px;
+      max-height: 250px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-right: none !important;
+      border-bottom: 3px solid #d2691e !important;
+      padding: 20px !important;
+      box-sizing: border-box;
+      display: block !important;
+    }
 
-      #ingredientInput {
-        min-width: 0 !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-      }
-
-      #get-recipes-btn {
-        width: 100% !important;
-        max-width: 320px !important;
-        box-sizing: border-box !important;
-        margin-top: 10px !important;
-      }
-
-      .ingredient-chip {
-        max-width: 100% !important;
-        word-break: break-word !important;
-      }
-
-      .recipe-box {
-        max-width: 100% !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-      }
-
-      /* --- NEW: Ingredients toggle button styles --- */
-      #toggleIngredientsBtn {
-        display: block !important; /* show on mobile */
-        width: 100%;
-        background-color: #d2691e;
-        color: white;
-        font-weight: 700;
-        border: none;
-        border-radius: 8px;
-        padding: 12px;
-        cursor: pointer;
-        box-shadow: 0 4px 8px rgba(210, 105, 30, 0.5);
-        text-align: left;
-        user-select: none;
-        position: relative; /* or fixed, if you want it to stay visible */
-        z-index: 1000;
-        margin-bottom: 20px;
-      }
-
-      /* Hide leftCol by default on mobile */
-      #leftCol {
-        display: none !important;
-        width: 100% !important;
-        border: none !important;
-        padding: 0 0 20px 0 !important;
-        max-height: none !important;
-        border-bottom: 3px solid #d2691e !important;
-        overflow-y: auto;
-      }
-
-      /* Show leftCol when toggled */
-      #leftCol.show {
-        display: block !important;
-      }
+    #rightCol {
+      width: 100% !important;
+      min-width: auto !important;
+      padding: 20px !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+    }
   }
 </style>
 <script type="application/ld+json">
