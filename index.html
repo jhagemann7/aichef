@@ -188,7 +188,6 @@
     padding: 30px 40px;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
   }
 
   /* Ingredient box container */
@@ -316,8 +315,8 @@
       width: 100% !important;
       min-width: auto !important;
       padding: 20px !important;
-      overflow-x: hidden !important;
-      overflow-y: hidden !important;
+      overflow: visible !important; /* <—— remove scrolling here */
+      flex-grow: 0 !important; /* optional: prevents unnecessary flex stretching */
     }
   }
 </style>
