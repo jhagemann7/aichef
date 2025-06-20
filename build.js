@@ -98,9 +98,7 @@ const navbarStyles = `
     color: #4a2c2a;
     font-weight: 600;
     font-size: 1rem;
-    line-height: 1.5; /* or 1, or same as navbar height */
-    display: inline-flex; /* make it behave more like a flex container */
-    align-items: center;  /* vertically center content */
+    line-height: 50px; 
     vertical-align: middle;
   }
 
