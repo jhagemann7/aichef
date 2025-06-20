@@ -37,6 +37,8 @@ const navbarStyles = `
 
   body {
     font-family: 'Comfortaa', cursive, sans-serif;
+    margin: 0;
+    padding: 0;
     background: #fff8f0;
     color: #4a2c2a;
   }
@@ -237,13 +239,13 @@ async function generateBlogPosts() {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  ${navbarStyles}
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${fields.seoMetaTitle || title} | Pantry Pal Ai</title>
   <meta name="description" content="${fields.seoMetaDesc || excerpt}" />
   <link rel="canonical" href="https://pantrypalai.com/blog/${slug}" />
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
+  ${navbarStyles}
   <style>
     body { font-family: 'Comfortaa', cursive, sans-serif; margin: 40px; color: #4a2c2a; background: #fff8f0; }
     h1 { color: #a0522d; }
@@ -314,13 +316,13 @@ async function generateBlogIndex(posts) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
- ${navbarStyles}
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blog | Pantry Pal Ai</title>
   <meta name="description" content="Explore the latest recipe tips, AI cooking ideas, and kitchen hacks from Pantry Pal Ai." />
   <link rel="canonical" href="${baseUrl}/blog" />
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
+  ${navbarStyles}
   <style>
     body { font-family: 'Comfortaa', cursive, sans-serif; margin: 40px; color: #4a2c2a; background: #fff8f0; }
     h1 { color: #a0522d; }
