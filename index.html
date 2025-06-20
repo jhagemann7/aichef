@@ -494,151 +494,153 @@
 </main>
 
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Navbar toggle button
-    const toggleButton = document.querySelector('.navbar-toggle');
-    const navLinks = document.querySelector('.navbar-links');
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navbar toggle button
+      const toggleButton = document.querySelector('.navbar-toggle');
+      const navLinks = document.querySelector('.navbar-links');
 
-    toggleButton.addEventListener('click', () => {
-      const expanded = toggleButton.getAttribute('aria-expanded') === 'true' || false;
-      toggleButton.setAttribute('aria-expanded', !expanded);
-      navLinks.classList.toggle('show');
-    });
-
-    // Ingredients toggle button for mobile
-    const ingToggleBtn = document.getElementById('toggleIngredientsBtn');
-    const leftCol = document.getElementById('leftCol');
-
-    ingToggleBtn.addEventListener('click', () => {
-      const isExpanded = ingToggleBtn.getAttribute('aria-expanded') === 'true';
-      ingToggleBtn.setAttribute('aria-expanded', !isExpanded);
-      leftCol.classList.toggle('show');
-
-      // Change arrow direction
-      ingToggleBtn.textContent = !isExpanded ? "Common Ingredients ▲" : "Common Ingredients ▼";
-    });
-
-    // Ingredient input, chips, and list click handling
-    const ingredientBox = document.getElementById('ingredientBox');
-    const ingredientInput = document.getElementById('ingredientInput');
-    const ingredientLists = document.querySelectorAll('.ingredient-item');
-    const getRecipesBtn = document.getElementById('get-recipes-btn');
-    const recipesContainer = document.getElementById('recipes-container');
-
-    let ingredients = [];
-
-    function renderIngredients() {
-      // Remove all existing chips except the input field
-      ingredientBox.querySelectorAll('.ingredient-chip').forEach(tag => tag.remove());
-
-      ingredients.forEach(ing => {
-        const tag = document.createElement('span');
-        tag.className = 'ingredient-chip';
-        tag.textContent = ing;
-
-        const removeX = document.createElement('span');
-        removeX.className = 'removeX';
-        removeX.textContent = '×';
-        removeX.title = 'Remove ingredient';
-        removeX.addEventListener('click', e => {
-          e.stopPropagation();
-          removeIngredient(ing);
-        });
-
-        tag.appendChild(removeX);
-        ingredientBox.insertBefore(tag, ingredientInput);
+      toggleButton.addEventListener('click', () => {
+        const expanded = toggleButton.getAttribute('aria-expanded') === 'true';
+        toggleButton.setAttribute('aria-expanded', !expanded);
+        navLinks.classList.toggle('show');
       });
-    }
 
-    function addIngredient(ing) {
-      ing = ing.trim();
-      if (!ing) return;
-      if (!ingredients.some(i => i.toLowerCase() === ing.toLowerCase())) {
-        ingredients.push(ing);
+      // Ingredients toggle button for mobile
+      const ingToggleBtn = document.getElementById('toggleIngredientsBtn');
+      const leftCol = document.getElementById('leftCol');
+
+      // Initialize toggle button text on load
+      const initialExpanded = ingToggleBtn.getAttribute('aria-expanded') === 'true';
+      ingToggleBtn.textContent = initialExpanded ? "Common Ingredients ▲" : "Common Ingredients ▼";
+
+      ingToggleBtn.addEventListener('click', () => {
+        const isExpanded = ingToggleBtn.getAttribute('aria-expanded') === 'true';
+
+        // Toggle aria-expanded attribute
+        ingToggleBtn.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+
+        // Toggle visibility of leftCol
+        leftCol.classList.toggle('show');
+
+        // Update button text accordingly
+        ingToggleBtn.textContent = !isExpanded ? "Common Ingredients ▲" : "Common Ingredients ▼";
+      });
+
+      // Ingredient input, chips, and list click handling
+      const ingredientBox = document.getElementById('ingredientBox');
+      const ingredientInput = document.getElementById('ingredientInput');
+      const ingredientLists = document.querySelectorAll('.ingredient-item');
+      const getRecipesBtn = document.getElementById('get-recipes-btn');
+      const recipesContainer = document.getElementById('recipes-container');
+
+      let ingredients = [];
+
+      function renderIngredients() {
+        ingredientBox.querySelectorAll('.ingredient-chip').forEach(tag => tag.remove());
+
+        ingredients.forEach(ing => {
+          const tag = document.createElement('span');
+          tag.className = 'ingredient-chip';
+          tag.textContent = ing;
+
+          const removeX = document.createElement('span');
+          removeX.className = 'removeX';
+          removeX.textContent = '×';
+          removeX.title = 'Remove ingredient';
+          removeX.addEventListener('click', e => {
+            e.stopPropagation();
+            removeIngredient(ing);
+          });
+
+          tag.appendChild(removeX);
+          ingredientBox.insertBefore(tag, ingredientInput);
+        });
+      }
+
+      function addIngredient(ing) {
+        ing = ing.trim();
+        if (!ing) return;
+        if (!ingredients.some(i => i.toLowerCase() === ing.toLowerCase())) {
+          ingredients.push(ing);
+          renderIngredients();
+        }
+      }
+
+      function removeIngredient(ing) {
+        ingredients = ingredients.filter(i => i.toLowerCase() !== ing.toLowerCase());
         renderIngredients();
       }
-    }
 
-    function removeIngredient(ing) {
-      ingredients = ingredients.filter(i => i.toLowerCase() !== ing.toLowerCase());
-      renderIngredients();
-    }
+      ingredientLists.forEach(item => {
+        item.addEventListener('click', () => {
+          addIngredient(item.textContent);
+          ingredientInput.focus();
+        });
+      });
 
-    // Click ingredients from left list to add
-    ingredientLists.forEach(item => {
-      item.addEventListener('click', () => {
-        addIngredient(item.textContent);
+      ingredientInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addIngredient(ingredientInput.value);
+          ingredientInput.value = '';
+        }
+      });
+
+      ingredientBox.addEventListener('click', () => {
         ingredientInput.focus();
       });
-    });
 
-    // Handle Enter key in ingredient input
-    ingredientInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        addIngredient(ingredientInput.value);
-        ingredientInput.value = '';
-      }
-    });
-
-    // Focus input when clicking ingredient box container
-    ingredientBox.addEventListener('click', () => {
-      ingredientInput.focus();
-    });
-
-    // Fetch recipes from backend API
-    async function fetchRecipes() {
-      if (ingredients.length === 0) {
-        recipesContainer.innerHTML = "<p>Please add some ingredients first.</p>";
-        return;
-      }
-
-      recipesContainer.innerHTML = "<p>Loading recipes...</p>";
-
-      try {
-        const response = await fetch("/.netlify/functions/recipes", {
-          method: "POST",
-          body: JSON.stringify({
-            ingredients: ingredients.join(", "),
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        const data = await response.json();
-
-        if (data.recipes) {
-          const recipeList = data.recipes.split(/\n(?=\d+\.\s)/);
-
-          recipesContainer.innerHTML = "";
-
-          recipeList.forEach((recipeText) => {
-            const recipeDiv = document.createElement("div");
-            recipeDiv.className = "recipe-box";
-
-            const html = recipeText.trim()
-              .replace(/\n\n/g, '</p><p>')
-              .replace(/\n/g, '<br>');
-
-            recipeDiv.innerHTML = `<p>${html}</p>`;
-            recipesContainer.appendChild(recipeDiv);
-          });
-        } else if (data.error) {
-          recipesContainer.innerHTML = `<p>Error: ${data.error}</p>`;
-        } else {
-          recipesContainer.innerHTML = "<p>Unexpected error.</p>";
+      async function fetchRecipes() {
+        if (ingredients.length === 0) {
+          recipesContainer.innerHTML = "<p>Please add some ingredients first.</p>";
+          return;
         }
-      } catch (err) {
-        recipesContainer.innerHTML = `<p>Request failed: ${err.message}</p>`;
+
+        recipesContainer.innerHTML = "<p>Loading recipes...</p>";
+
+        try {
+          const response = await fetch("/.netlify/functions/recipes", {
+            method: "POST",
+            body: JSON.stringify({
+              ingredients: ingredients.join(", "),
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const data = await response.json();
+
+          if (data.recipes) {
+            const recipeList = data.recipes.split(/\n(?=\d+\.\s)/);
+
+            recipesContainer.innerHTML = "";
+
+            recipeList.forEach((recipeText) => {
+              const recipeDiv = document.createElement("div");
+              recipeDiv.className = "recipe-box";
+
+              const html = recipeText.trim()
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
+
+              recipeDiv.innerHTML = `<p>${html}</p>`;
+              recipesContainer.appendChild(recipeDiv);
+            });
+          } else if (data.error) {
+            recipesContainer.innerHTML = `<p>Error: ${data.error}</p>`;
+          } else {
+            recipesContainer.innerHTML = "<p>Unexpected error.</p>";
+          }
+        } catch (err) {
+          recipesContainer.innerHTML = `<p>Request failed: ${err.message}</p>`;
+        }
       }
-    }
 
-    getRecipesBtn.addEventListener('click', fetchRecipes);
+      getRecipesBtn.addEventListener('click', fetchRecipes);
 
-    // Initial render of ingredient chips
-    renderIngredients();
-  });
+      renderIngredients();
+    });
   </script>
 
 </body>
