@@ -396,13 +396,26 @@ async function generateBlogIndex(posts) {
     ul.posts-list li {
       border-bottom: 1px solid #d2691e;
       padding-bottom: 20px;
+      max-width: 300px;
+    }
+
+    ul.posts-list li img {
+      max-width: 300px;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+      margin-bottom: 8px;
     }
   
     ul.posts-list li a {
+      display: block;
       font-size: 1.25rem;
       font-weight: 600;
       color: #4a2c2a;
       text-decoration: none;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      max-width: 100%;
     }
   
     ul.posts-list li a:hover {
