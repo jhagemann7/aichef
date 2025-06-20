@@ -342,6 +342,9 @@
         box-shadow: 0 4px 8px rgba(210, 105, 30, 0.5);
         text-align: left;
         user-select: none;
+        position: relative; /* or fixed, if you want it to stay visible */
+        z-index: 1000;
+        margin-bottom: 20px;
       }
 
       /* Hide leftCol by default on mobile */
@@ -482,7 +485,7 @@
     <input type="text" id="ingredientInput" placeholder="Type ingredient and press Enter" />
   </div>
   <button id="get-recipes-btn" type="button">Get Recipes</button>
-  <p>Click ingredients on the left or type your own and press Enter.</p>
+  <p>Select from common ingredients or type your own and press Enter.</p>
   <div id="recipes-container" style="white-space: pre-wrap; font-family: monospace; margin-top: 10px; color: #4a2c2a;"></div>
 </div>
 </main>
