@@ -51,6 +51,13 @@ addIngredientForm.addEventListener("submit", (e) => {
 });
 
 // Function to call backend API to get recipes
+
+function cleanRecipeText(text) {
+  if (!text) return '';
+  // Remove leading/trailing asterisks and trim whitespace
+  return text.replace(/^\*+|\*+$/g, '').trim();
+}
+
 async function fetchRecipes() {
   if (selectedIngredients.size === 0) {
     recipesContainer.textContent = "Please add some ingredients first.";
@@ -74,7 +81,10 @@ async function fetchRecipes() {
     console.log(data);  // add this line to see what's coming back
 
     if (data.recipes) {
-      recipesContainer.innerHTML = `<pre>${data.recipes}</pre>`;
+      const cleanText = cleanRecipeText(data.recipes);
+      // Use textContent inside <pre> by creating element, or just do this:
+      recipesContainer.innerHTML = `<pre></pre>`;
+      recipesContainer.querySelector('pre').textContent = cleanText;
     } else if (data.error) {
       recipesContainer.textContent = `Error: ${data.error}`;
     } else {
