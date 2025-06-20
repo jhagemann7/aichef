@@ -357,9 +357,11 @@ async function generateBlogIndex(posts) {
   .map(
     (post) => `
       <li>
-        ${post.featuredImageUrl ? `<img src="${post.featuredImageUrl}" alt="${post.title}" style="max-width: 300px; height: auto; border-radius: 6px; display: block; margin-              bottom: 8px;" />` : ''}
-        <a href="/blog/${post.slug}">${post.title}</a>
-        <span class="date">— ${new Date(post.publishDate).toLocaleDateString()}</span>
+        <a href="/blog/${post.slug}" class="post-card">
+          ${post.featuredImageUrl ? `<img src="${post.featuredImageUrl}" alt="${post.title}" />` : ''}
+          <h2>${post.title}</h2>
+          <p class="date">— ${new Date(post.publishDate).toLocaleDateString()}</p>
+        </a>
       </li>`
   )
   .join('\n');
@@ -423,30 +425,46 @@ async function generateBlogIndex(posts) {
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       text-align: center;
     }
-    
-    ul.posts-list li img {
+    ul.posts-list li {
+      padding: 0;
+      border: 1px solid #d2691e;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    ul.posts-list li a.post-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      padding: 16px;
+      text-align: center;
+      transition: background 0.15s ease, transform 0.15s ease;
+      height: 100%;
+    }
+
+    ul.posts-list li a.post-card:hover {
+      background: #fff0e6;
+      transform: translateY(-2px);
+    }
+
+    ul.posts-list li a.post-card img {
       max-width: 100%;
       height: auto;
       border-radius: 6px;
       display: block;
-      margin: 0 auto 8px;
+      margin: 0 auto 12px;
     }
-    
-    ul.posts-list li a {
-      display: block;
+
+    ul.posts-list li a.post-card h2 {
       font-size: 1.1rem;
       font-weight: 600;
+      margin: 0 0 8px;
       color: #4a2c2a;
-      text-decoration: none;
-      margin: 12px 0 6px;
-      word-wrap: break-word;
     }
-    
-    ul.posts-list li a:hover {
-      color: #d2691e;
-    }
-    
-    ul.posts-list li .date {
+
+    ul.posts-list li a.post-card .date {
       font-size: 0.85rem;
       color: #555;
     }
