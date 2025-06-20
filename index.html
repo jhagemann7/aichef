@@ -293,18 +293,31 @@
   /* Responsive for smaller screens */
   @media (max-width: 720px) {
     body {
-      flex-direction: column;
-      height: auto;
+      overflow: auto !important;
     }
+
+    .main-content {
+      flex-direction: column !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
     #leftCol {
-      width: 100%;
-      border-right: none;
-      border-bottom: 3px solid #d2691e;
-      padding: 15px 20px;
-      max-height: 200px;
+      width: 100% !important;
+      min-width: auto !important;
+      max-height: 200px !important;
+      border-right: none !important;
+      border-bottom: 3px solid #d2691e !important;
+      padding: 15px 20px !important;
+      overflow-y: auto !important;
+      box-sizing: border-box !important;
     }
+
     #rightCol {
-      padding: 20px;
+      width: 100% !important;
+      min-width: auto !important;
+      padding: 20px !important;
+      overflow-y: visible !important;
     }
   }
 </style>
