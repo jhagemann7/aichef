@@ -128,6 +128,9 @@ const navbarStyles = `
   }
 
   @media (max-width: 600px) {
+    .post-hero h1 {
+    font-size: 1.5rem;
+    }
     .navbar {
       flex-wrap: wrap;
       height: auto;
@@ -278,9 +281,16 @@ async function generateBlogPosts() {
       border-radius: 8px;
       margin: 20px 0;
     }
+    .post-hero {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
     .post-hero h1 {
       color: #a0522d;
       margin-bottom: 10px;
+      font-size: 2rem;
+      word-wrap: break-word;
     }
     .container {
       max-width: 900px;
