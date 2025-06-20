@@ -30,6 +30,38 @@ const navbarHtml = `
 
 const navbarStyles = `
 <style>
+  .site-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #4a2c2a;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .site-brand:hover {
+    color: #d2691e;
+  }
+
+  .favicon {
+    height: 30px;
+    width: 30px;
+    margin-right: 8px;
+  }
+
+  .site-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  body {
+    font-family: 'Comfortaa', cursive, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #fff8f0;
+    color: #4a2c2a;
+  }
+
   .navbar {
     display: flex;
     align-items: center;
@@ -39,25 +71,15 @@ const navbarStyles = `
     padding: 0 20px;
     height: 50px;
     box-sizing: border-box;
+    flex-shrink: 0;
     width: 100%;
   }
+
   .navbar-left {
     display: flex;
     align-items: center;
   }
-  .site-brand {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #4a2c2a;
-    font-weight: 700;
-    font-size: 1.2rem;
-  }
-  .favicon {
-    height: 30px;
-    width: 30px;
-    margin-right: 8px;
-  }
+
   .navbar-links {
     list-style: none;
     display: flex;
@@ -65,15 +87,18 @@ const navbarStyles = `
     padding: 0;
     gap: 20px;
   }
+
   .navbar-links li a {
     text-decoration: none;
     color: #4a2c2a;
     font-weight: 600;
     font-size: 1rem;
   }
+
   .navbar-links li a:hover {
     color: #d2691e;
   }
+
   .navbar-toggle {
     display: none;
     font-size: 1.8rem;
@@ -82,6 +107,7 @@ const navbarStyles = `
     cursor: pointer;
     color: #4a2c2a;
   }
+
   @media (max-width: 600px) {
     .navbar {
       flex-wrap: wrap;
