@@ -30,6 +30,17 @@ const navbarHtml = `
 
 const navbarStyles = `
 <style>
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Comfortaa', cursive, sans-serif;
+    background: #fff8f0;
+    color: #4a2c2a;
+  }
+
   .site-brand {
     display: flex;
     align-items: center;
@@ -52,14 +63,6 @@ const navbarStyles = `
   .site-title {
     font-weight: 700;
     font-size: 1.2rem;
-  }
-
-  body {
-    font-family: 'Comfortaa', cursive, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #fff8f0;
-    color: #4a2c2a;
   }
 
   .navbar {
@@ -114,9 +117,11 @@ const navbarStyles = `
       height: auto;
       padding: 10px 20px;
     }
+
     .navbar-toggle {
       display: block;
     }
+
     .navbar-links {
       width: 100%;
       flex-direction: column;
@@ -124,12 +129,20 @@ const navbarStyles = `
       margin-top: 10px;
       gap: 10px;
     }
+
     .navbar-links.show {
       display: flex;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
   }
 </style>
 `;
+
 
 const navbarScript = `
 <script>
