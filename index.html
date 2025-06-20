@@ -295,7 +295,7 @@
 
     .main-content {
       flex-direction: column;
-      overflow: visible;
+      overflow-x: hidden;
     }
 
     #leftCol {
@@ -316,7 +316,8 @@
       width: 100% !important;
       min-width: auto !important;
       padding: 20px !important;
-      overflow: visible !important;
+      overflow-x: hidden; /* NO horizontal scroll on right column */
+      overflow-y: visible !important;
       flex-grow: 0 !important;
     }
   }
