@@ -33,16 +33,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
 
 <style>
-  body {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  body, html {
+    height: 100%;
     margin: 0;
     font-family: 'Comfortaa', cursive, Arial, sans-serif;
     background: linear-gradient(135deg, #f7e5d7, #f4cba1);
     color: #4a2c2a;
+    overflow: hidden;
   }
-
   .main-content {
     display: flex;
     flex: 1;
@@ -188,6 +186,7 @@
     padding: 30px 40px;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
 
   /* Ingredient box container */
@@ -292,9 +291,15 @@
   }
 
   /* Responsive for smaller screens */
+  /* Responsive for smaller screens */
   @media (max-width: 720px) {
+    body, html {
+      overflow: auto;
+    }
+
     .main-content {
       flex-direction: column;
+      overflow: visible;
     }
 
     #leftCol {
@@ -315,8 +320,8 @@
       width: 100% !important;
       min-width: auto !important;
       padding: 20px !important;
-      overflow: visible !important; /* <—— remove scrolling here */
-      flex-grow: 0 !important; /* optional: prevents unnecessary flex stretching */
+      overflow: visible !important;
+      flex-grow: 0 !important;
     }
   }
 </style>
