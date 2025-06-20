@@ -39,7 +39,6 @@ const navbarStyles = `
     padding: 0 20px;
     height: 50px;
     box-sizing: border-box;
-    flex-shrink: 0;
     width: 100%;
   }
   .navbar-left {
@@ -83,8 +82,6 @@ const navbarStyles = `
     cursor: pointer;
     color: #4a2c2a;
   }
-
-  /* Responsive navbar for small screens */
   @media (max-width: 600px) {
     .navbar {
       flex-wrap: wrap;
@@ -107,6 +104,19 @@ const navbarStyles = `
   }
 </style>
 `;
+
+const navbarScript = `
+<script>
+  const toggleButton = document.querySelector(".navbar-toggle");
+  const navbarLinks = document.querySelector(".navbar-links");
+  toggleButton.addEventListener("click", () => {
+    const expanded = toggleButton.getAttribute("aria-expanded") === "true";
+    toggleButton.setAttribute("aria-expanded", !expanded);
+    navbarLinks.classList.toggle("show");
+  });
+</script>
+`;
+
 
 // Helper to render rich text (simplified, you can adapt yours)
 function renderRichText(node) {
@@ -188,6 +198,7 @@ async function generateBlogPosts() {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  ${navbarStyles}
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${fields.seoMetaTitle || title} | Pantry Pal Ai</title>
@@ -213,6 +224,7 @@ async function generateBlogPosts() {
   </style>
 </head>
 <body>
+  ${navbarHtml}
   <a href="/blog">← Back to blog</a>
 
   <div class="post-hero">
@@ -222,6 +234,7 @@ async function generateBlogPosts() {
   </div>
 
   <article>${bodyHtml}</article>
+  ${navbarScript}
 </body>
 </html>`;
 
@@ -277,6 +290,7 @@ async function generateBlogIndex(posts) {
   <ul>
     ${postsList}
   </ul>
+  ${navbarScript}
 </body>
 </html>`;
 
