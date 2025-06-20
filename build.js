@@ -247,7 +247,13 @@ async function generateBlogPosts() {
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
   ${navbarStyles}
   <style>
-    body { font-family: 'Comfortaa', cursive, sans-serif; margin: 40px; color: #4a2c2a; background: #fff8f0; }
+    body {
+      font-family: 'Comfortaa', cursive, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #4a2c2a;
+      background: #fff8f0;
+    }
     h1 { color: #a0522d; }
     a { color: #d2691e; }
     .author-date { font-style: italic; font-size: 0.9rem; margin-bottom: 20px; }
@@ -324,7 +330,13 @@ async function generateBlogIndex(posts) {
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
   ${navbarStyles}
   <style>
-    body { font-family: 'Comfortaa', cursive, sans-serif; margin: 40px; color: #4a2c2a; background: #fff8f0; }
+    body {
+      font-family: 'Comfortaa', cursive, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #4a2c2a;
+      background: #fff8f0;
+    }
     h1 { color: #a0522d; }
     a { color: #d2691e; text-decoration: none; }
     a:hover { text-decoration: underline; }
