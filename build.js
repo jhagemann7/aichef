@@ -22,8 +22,8 @@ const navbarHtml = `
 
   <ul class="navbar-links">
     <li><a href="/blog/">Blog</a></li>
-    <li><a href="/faq/">FAQ</a></li>
-    <li><a href="/contact/">Contact</a></li>
+    <li><a href="/faq">FAQ</a></li>
+    <li><a href="/contact">Contact</a></li>
   </ul>
 </nav>
 `;
@@ -514,8 +514,8 @@ async function generateSitemap(posts) {
 
   const staticUrls = [
     { loc: baseUrl + '/', priority: 1.0 },
-    { loc: baseUrl + '/faq/', priority: 0.8 },
-    { loc: baseUrl + '/contact/', priority: 0.8 },
+    { loc: baseUrl + '/faq', priority: 0.8 },
+    { loc: baseUrl + '/contact', priority: 0.8 },
     {
       loc: baseUrl + '/blog/',
       priority: 0.9,
