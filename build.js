@@ -249,6 +249,8 @@ async function generateBlogPosts() {
     const publishDate = fields.publishDate;
     const excerpt = fields.excerpt;
     const featuredImageUrl = fields.featuredImage?.fields.file.url || null;
+    const featuredImageWidth = 1280;
+    const featuredImageHeight = 800;
     const bodyHtml = renderRichText(fields.bodyContent);
 
     // Basic HTML template for each blog post
@@ -261,7 +263,10 @@ async function generateBlogPosts() {
   <title>${fields.seoMetaTitle || title} | Pantry Pal Ai</title>
   <meta name="description" content="${fields.seoMetaDesc || excerpt}" />
   <link rel="canonical" href="https://pantrypalai.com/blog/${slug}/" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" as="style" onload="this.rel='stylesheet'">
+  <noscript>
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
+  </noscript>
   ${navbarStyles}
   <style>
     body {
@@ -327,7 +332,7 @@ async function generateBlogPosts() {
   <a href="/blog">← Back to blog</a>
 
   <div class="post-hero">
-    ${featuredImageUrl ? `<img src="${featuredImageUrl}" alt="${title}" class="featured-img" />` : ''}
+    ${featuredImageUrl ? `<img src="${featuredImageUrl}" alt="${title}" class="featured-img" width="${featuredImageWidth}" height="${featuredImageHeight}" loading="lazy" />` : ''}
     <h1>${title}</h1>
     <div class="author-date">By ${author} | ${new Date(publishDate).toLocaleDateString()}</div>
   </div>
@@ -375,7 +380,10 @@ async function generateBlogIndex(posts) {
   <title>Blog | Pantry Pal Ai</title>
   <meta name="description" content="Explore the latest recipe tips, AI cooking ideas, and kitchen hacks from Pantry Pal Ai." />
   <link rel="canonical" href="${baseUrl}/blog/" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" as="style" onload="this.rel='stylesheet'">
+  <noscript>
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
+  </noscript>
   ${navbarStyles}
   <style>
     body {
