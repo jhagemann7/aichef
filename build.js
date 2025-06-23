@@ -21,9 +21,9 @@ const navbarHtml = `
   </button>
 
   <ul class="navbar-links">
-    <li><a href="/blog">Blog</a></li>
-    <li><a href="/faq">FAQ</a></li>
-    <li><a href="/contact">Contact</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/faq/">FAQ</a></li>
+    <li><a href="/contact/">Contact</a></li>
   </ul>
 </nav>
 `;
@@ -260,7 +260,7 @@ async function generateBlogPosts() {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${fields.seoMetaTitle || title} | Pantry Pal Ai</title>
   <meta name="description" content="${fields.seoMetaDesc || excerpt}" />
-  <link rel="canonical" href="https://pantrypalai.com/blog/${slug}" />
+  <link rel="canonical" href="https://pantrypalai.com/blog/${slug}/" />
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
   ${navbarStyles}
   <style>
@@ -374,7 +374,7 @@ async function generateBlogIndex(posts) {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blog | Pantry Pal Ai</title>
   <meta name="description" content="Explore the latest recipe tips, AI cooking ideas, and kitchen hacks from Pantry Pal Ai." />
-  <link rel="canonical" href="${baseUrl}/blog" />
+  <link rel="canonical" href="${baseUrl}/blog/" />
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
   ${navbarStyles}
   <style>
