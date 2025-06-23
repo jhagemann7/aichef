@@ -506,10 +506,10 @@ async function generateSitemap(posts) {
 
   const staticUrls = [
     { loc: baseUrl + '/', priority: 1.0 },
-    { loc: baseUrl + '/faq', priority: 0.8 },
-    { loc: baseUrl + '/contact', priority: 0.8 },
+    { loc: baseUrl + '/faq/', priority: 0.8 },
+    { loc: baseUrl + '/contact/', priority: 0.8 },
     {
-      loc: baseUrl + '/blog',
+      loc: baseUrl + '/blog/',
       priority: 0.9,
       lastmod: latestPostDate,
     },
@@ -531,7 +531,7 @@ async function generateSitemap(posts) {
     .map(
       (post) => `
   <url>
-    <loc>${baseUrl}/blog/${post.slug}</loc>
+    <loc>${baseUrl}/blog/${post.slug}/</loc>
     <lastmod>${new Date(post.publishDate).toISOString().split('T')[0]}</lastmod>
     <priority>0.7</priority>
   </url>`
